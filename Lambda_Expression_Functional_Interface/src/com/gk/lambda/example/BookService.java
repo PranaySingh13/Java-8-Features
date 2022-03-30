@@ -9,6 +9,9 @@ public class BookService {
 	public List<Book> getBooksInSort() {
 
 		List<Book> books = new BookDao().getBooks();
+
+		// By Passing Anonymous Class(Its mainly used when interface contains multiple
+		// abstract methods)
 		Collections.sort(books, new Comparator<Book>() {
 
 			@Override
@@ -22,8 +25,7 @@ public class BookService {
 
 	}
 
-	
-	//Above Method with Lambda Expression
+	// Above Method with Lambda Expression
 	public List<Book> getBooksInSortWithLambda() {
 
 		List<Book> books = new BookDao().getBooks();
