@@ -1,4 +1,4 @@
-package com.gk.streamapi;
+package com.gk.streamapi.demo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 
 /**
  * Stream API is used to process collections of objects.
+ * 
+ * It Can be applied only on List or Array.
  * 
  * A Stream is a sequence of objects that supports various methods which can be
  * pipelined to produce the desired result.
