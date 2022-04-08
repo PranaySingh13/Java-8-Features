@@ -1,6 +1,5 @@
 package com.gk.streamapi.map_reduce;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
@@ -76,46 +75,39 @@ public class Stream_API_Classroom_Data_Example {
 
 	public static List<String> getPassedStudentsNamesWithGradeC() {
 
-		List<Student> generalCategoryStudents = classroomList.stream()
+		List<String> generalPassedStudents = classroomList.stream()
 				.flatMap(classroom -> classroom.getStudents().stream())
-				.filter(student -> student.getCategory() == "general").collect(Collectors.toList());
-		List<Student> obcCategoryStudents = classroomList.stream()
-				.flatMap(classroom -> classroom.getStudents().stream())
-				.filter(student -> student.getCategory() == "obc").collect(Collectors.toList());
-
-		List<Student> scCategoryStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
-				.filter(student -> student.getCategory() == "sc").collect(Collectors.toList());
-
-		List<Student> stCategoryStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
-				.filter(student -> student.getCategory() == "st").collect(Collectors.toList());
-
-		List<String> generalPassedStudents = generalCategoryStudents.stream()
+				.filter(student -> student.getCategory() == "general")
 				.filter(student -> student.getMarks().stream().allMatch(mark -> mark > 33))
 				.filter(student -> student.getMarks().stream().mapToInt(i -> i).average().getAsDouble() > 50)
 				.map(Student::getName).collect(Collectors.toList());
 
-		List<String> obcPassedStudents = obcCategoryStudents.stream()
+		List<String> obcPassedStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
+				.filter(student -> student.getCategory() == "obc")
 				.filter(student -> student.getMarks().stream().allMatch(mark -> mark > 33))
 				.filter(student -> student.getMarks().stream().mapToInt(i -> i).average().getAsDouble() > 40)
 				.map(Student::getName).collect(Collectors.toList());
 
-		List<String> scPassedStudents = scCategoryStudents.stream()
+		List<String> scPassedStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
+				.filter(student -> student.getCategory() == "sc")
 				.filter(student -> student.getMarks().stream().allMatch(mark -> mark > 33)).map(Student::getName)
 				.collect(Collectors.toList());
 
-		List<String> stPassedStudents = stCategoryStudents.stream()
+		List<String> stPassedStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
+				.filter(student -> student.getCategory() == "st")
 				.filter(student -> student.getMarks().stream().allMatch(mark -> mark > 33)).map(Student::getName)
 				.collect(Collectors.toList());
 
 		// combining all list
-		List<String> PassedStudentsNamesWithGradeC = Stream
+		List<String> passedStudentsNamesWithGradeC = Stream
 				.of(generalPassedStudents, obcPassedStudents, scPassedStudents, stPassedStudents)
 				.flatMap(Collection::stream).collect(Collectors.toList());
 
-		return PassedStudentsNamesWithGradeC;
+		return passedStudentsNamesWithGradeC;
 
 	}
-
+	 //4. define a function printCitiesTopper() that will print an array of objects each object will have two properties
+    //cityName and topperName.
 	public static void printCitiesTopper() {
 		List<Student> puneStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
 				.filter(student -> student.getCity() == "pune").collect(Collectors.toList());
@@ -124,30 +116,36 @@ public class Stream_API_Classroom_Data_Example {
 		List<Student> chandigarhStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
 				.filter(student -> student.getCity() == "chandigarh").collect(Collectors.toList());
 
-		List<Integer> list1 = Arrays.asList(1, 2, 3);
-		List<Integer> list2 = Arrays.asList(4, 5, 6);
-		List<Integer> list3 = Arrays.asList(7, 8, 9);
-
-		int list1sum = list1.stream().reduce(Integer::sum).get();
-		int list2sum = list2.stream().reduce(Integer::sum).get();
-		int list3sum = list3.stream().reduce(Integer::sum).get();
-
-		int maximumSumOfAllList = Arrays.asList(list1sum, list2sum, list3sum).stream().mapToInt(i -> i).max()
-				.getAsInt();
-		
-		System.out.println(maximumSumOfAllList);
-
 		List<Integer> puneStudentsSum = puneStudents.stream()
 				.map(student -> student.getMarks().stream().reduce(Integer::sum).get()).collect(Collectors.toList());
+
+		int maxSumOfPuneStudents = puneStudentsSum.stream().reduce(Integer::max).get();
+
+		List<String> puneTopperName = puneStudents.stream()
+				.filter(student -> student.getMarks().stream().reduce(Integer::sum).get() == maxSumOfPuneStudents)
+				.map(student -> student.getName()).collect(Collectors.toList());
+
 		List<Integer> jaipurStudentsSum = jaipurStudents.stream()
 				.map(student -> student.getMarks().stream().reduce(Integer::sum).get()).collect(Collectors.toList());
+
+		int maxSumOfJaipurStudents = jaipurStudentsSum.stream().reduce(Integer::max).get();
+
+		List<String> jaipurTopperName = jaipurStudents.stream()
+				.filter(student -> student.getMarks().stream().reduce(Integer::sum).get() == maxSumOfJaipurStudents)
+				.map(student -> student.getName()).collect(Collectors.toList());
+
 		List<Integer> chandigarhStudentsSum = chandigarhStudents.stream()
 				.map(student -> student.getMarks().stream().reduce(Integer::sum).get()).collect(Collectors.toList());
-		System.out.println("---------->" + puneStudentsSum);
-		System.out.println("---------->" + jaipurStudentsSum);
-		System.out.println("---------->" + chandigarhStudentsSum);
-		
-		
+
+		int maxSumOfChandigarhStudents = chandigarhStudentsSum.stream().reduce(Integer::max).get();
+
+		List<String> chandigarhTopperName = chandigarhStudents.stream()
+				.filter(student -> student.getMarks().stream().reduce(Integer::sum).get() == maxSumOfChandigarhStudents)
+				.map(student -> student.getName()).collect(Collectors.toList());
+
+		System.out.println("Pune Topper:- "+puneTopperName);
+		System.out.println("Jaipur Topper:- "+jaipurTopperName);
+		System.out.println("Chandigarh Topper:- "+chandigarhTopperName);
 
 	}
 
@@ -169,7 +167,7 @@ public class Stream_API_Classroom_Data_Example {
 
 		List<String> getPassedStudentsNamesWithGradeC = getPassedStudentsNamesWithGradeC();
 		System.out.println(getPassedStudentsNamesWithGradeC);
-		
+
 		printCitiesTopper();
 
 	}

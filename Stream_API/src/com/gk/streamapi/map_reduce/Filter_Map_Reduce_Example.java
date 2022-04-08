@@ -1,10 +1,7 @@
 package com.gk.streamapi.map_reduce;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 //Evaluate average salary of grade A employees
 public class Filter_Map_Reduce_Example {
