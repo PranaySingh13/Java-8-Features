@@ -10,30 +10,38 @@ public class Stream_API_Classroom_Data_Example {
 
 	static List<Classroom> classroomList = ClassroomDao.getAllClassroomStudents();
 
-	// 1. define a function getStudentsByCity(city) that will take cityName as
-	// ARGUMENT and return all students of
-	// that city.
+	/*
+	 * 1. define a function getStudentsByCity(city) that will take cityName as
+	 * ARGUMENT and return all students of that city.
+	 */
 	public static List<Student> getStudentsByCity(String city) {
 		return classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
 				.filter(student -> student.getCity().equalsIgnoreCase(city)).collect(Collectors.toList());
 	}
 
-	// 2. define a function getUniqueCities() that will return an array of city
-	// names. cities in array must not duplicate.
-	// ["pune", "jaipur","chandigarh"]
+	/*
+	 * 2. define a function getUniqueCities() that will return an array of city
+	 * names. cities in array must not duplicate. ["pune", "jaipur","chandigarh"]
+	 */
 	public static List<String> getUniqueCities() {
 		return classroomList.stream().flatMap(classroom -> classroom.getStudents().stream()).map(Student::getCity)
 				.distinct().collect(Collectors.toList());
 	}
 
-	// 3. define a function getPassedStudentsNamesWithGradeA() that will return all
-	// students who passed. passing
-	// criteria will be
-	// a.) marks> 33 in each subject.
-	// b.) marks> 33 in each subject and overall avg > 50
-	// c.) for general cat. marks> 33 in each subject and overall avg > 50
-	// for obc cat. marks> 33 in each subject and overall avg > 40
-	// for sc and st cat. marks> 33 in each subject only
+	/*
+	 * 3. define a function getPassedStudentsNamesWithGradeA() that will return all
+	 * students who passed. passing criteria will be
+	 * 
+	 * a.) marks> 33 in each subject.
+	 * 
+	 * b.) marks> 33 in each subject and overall avg > 50
+	 * 
+	 * c.) for general cat. marks> 33 in each subject and overall avg > 50
+	 * 
+	 * for obc cat. marks> 33 in each subject and overall avg > 40
+	 * 
+	 * for sc and st cat. marks> 33 in each subject only
+	 */
 	public static List<String> getPassedStudentsNamesWithGradeA() {
 		return classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
 				.filter(student -> student.getMarks().stream().allMatch(mark -> mark > 33)).map(Student::getName)
@@ -106,8 +114,11 @@ public class Stream_API_Classroom_Data_Example {
 		return passedStudentsNamesWithGradeC;
 
 	}
-	 //4. define a function printCitiesTopper() that will print an array of objects each object will have two properties
-    //cityName and topperName.
+
+	/*
+	 * 4. define a function printCitiesTopper() that will print an array of objects
+	 * each object will have two properties cityName and topperName.
+	 */
 	public static void printCitiesTopper() {
 		List<Student> puneStudents = classroomList.stream().flatMap(classroom -> classroom.getStudents().stream())
 				.filter(student -> student.getCity() == "pune").collect(Collectors.toList());
@@ -143,9 +154,9 @@ public class Stream_API_Classroom_Data_Example {
 				.filter(student -> student.getMarks().stream().reduce(Integer::sum).get() == maxSumOfChandigarhStudents)
 				.map(student -> student.getName()).collect(Collectors.toList());
 
-		System.out.println("Pune Topper:- "+puneTopperName);
-		System.out.println("Jaipur Topper:- "+jaipurTopperName);
-		System.out.println("Chandigarh Topper:- "+chandigarhTopperName);
+		System.out.println("Pune Topper:- " + puneTopperName);
+		System.out.println("Jaipur Topper:- " + jaipurTopperName);
+		System.out.println("Chandigarh Topper:- " + chandigarhTopperName);
 
 	}
 
