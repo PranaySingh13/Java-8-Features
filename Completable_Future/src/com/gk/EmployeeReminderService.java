@@ -31,7 +31,7 @@ import com.gk.dao.EmployeeDao;
  * 4. Get Employees email id.
  * 
  * 5. Send Reminder notification to employees.
- *
+ * 
  */
 public class EmployeeReminderService {
 
@@ -106,7 +106,8 @@ public class EmployeeReminderService {
 	 * 
 	 * Send Reminder Email : pool-2-thread-1
 	 * 
-	 * We can have N multiple Executors based on processor but it is not recommended.
+	 * We can have N multiple Executors based on processor but it is not
+	 * recommended.
 	 *
 	 */
 
