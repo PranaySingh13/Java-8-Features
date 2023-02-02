@@ -12,7 +12,23 @@ import java.util.concurrent.TimeUnit;
 /**
  * What is CompletableFuture ?
  * 
- * CompletableFuture is a new era of asynchronous programming.
+ * CompletableFuture is a new era of asynchronous programming.It's introduced as
+ * a Java 8 Concurrency API improvement.
+ * 
+ * Asynchronous Computation in JAVA
+ * 
+ * The future interface was added in Java 5 to serve as a result of an
+ * asynchronous computation, but it did not have any methods to combine these
+ * computations or handle possible errors.
+ * 
+ * In Java8, the CompletableFuture class was introduced. Along with the Future
+ * interface, it also implements the CompletionStage interface. This interface
+ * defines the contract for an asynchronous computation step that can be
+ * combined with other steps.
+ * 
+ * CompletableFuture is at the same time a building block and a framework with
+ * different methods for composing, combining, executing asynchronous compuation
+ * steps and handling errors.
  * 
  * Using Asynchronous programming we can write non blocking code where
  * concurrently we can run N no of task in separate thread without blocking main
